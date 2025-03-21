@@ -1,0 +1,643 @@
+<style>
+      /*Importing URLs for Fonts*/
+      @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;700&display=swap");
+      @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&display=swap");
+
+      * {
+        padding: 0%;
+        margin: 0%;
+      }
+
+      #gameLoader {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        background-color: rgba(18, 18, 18, 0.95);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+      }
+
+      .loader-container {
+        text-align: center;
+        color: white;
+      }
+
+      .game-title {
+        font-size: 24px;
+        margin-bottom: 10px;
+      }
+
+      .loading-text {
+        font-size: 18px;
+        margin-bottom: 15px;
+      }
+
+      .progress-bar {
+        width: 300px;
+        height: 15px;
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 10px;
+        overflow: hidden;
+        position: relative;
+      }
+
+      .progress {
+        height: 100%;
+        width: 0;
+        background: linear-gradient(90deg, #00f7ff, #0088a8, #001f3f);
+        transition: width 0.3s ease;
+      }
+
+      .loading-dots {
+        display: flex;
+        justify-content: center;
+        margin-top: 10px;
+      }
+
+      .dot {
+        width: 10px;
+        height: 10px;
+        margin: 0 5px;
+        background-color: #00b3ff;
+        border-radius: 50%;
+        animation: bounce 1.5s infinite;
+      }
+
+      .dot:nth-child(1) {
+        animation-delay: 0s;
+      }
+
+      .dot:nth-child(2) {
+        animation-delay: 0.2s;
+      }
+
+      .dot:nth-child(3) {
+        animation-delay: 0.4s;
+      }
+
+      @keyframes bounce {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+
+        50% {
+          transform: translateY(-8px);
+        }
+      }
+
+      /* Loader Fade-Out Animation */
+      .hide-loader {
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.5s ease-out;
+      }
+
+      #subscription {
+        display: flex;
+        flex-direction: column;
+        /* Arrange elements in a vertical order */
+        align-items: center;
+        /* Center content horizontally */
+        position: fixed;
+        bottom: 10px;
+        right: 10px;
+        /* Align to the right bottom corner */
+        text-align: center;
+      }
+
+      .text {
+        color: whitesmoke;
+        font-size: 12px;
+        font-weight: 400;
+        margin: 2px 0;
+        letter-spacing: 0.5px;
+      }
+
+      #hrt {
+        font-size: 24px;
+        color: rgb(255, 69, 69);
+        font-weight: bold;
+        margin: -6px 0;
+      }
+
+      /* Name Styling */
+      .name {
+        font-size: 16px;
+        font-weight: bold;
+        font-family: "Montserrat", sans-serif;
+        color: white;
+        text-transform: uppercase;
+      }
+
+      .head {
+        text-align: center;
+        color: #26ffcb;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+        margin-top: 1.2rem;
+      }
+
+      body {
+        background-color: black;
+      }
+
+      .game-container {
+        height: 70vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .game {
+        height: 60vmin;
+        width: 60vmin;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .box {
+        height: 18vmin;
+        width: 18vmin;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 2px 2.8px 2.5px 2px;
+        border-radius: 0.5rem;
+        border: none;
+        justify-content: center;
+        align-items: center;
+        font-size: 6rem;
+        background-color: #1f3540;
+        box-shadow: 0.4rem;
+        text-shadow: 0 0 0.4rem #6A0572 , 0 0 0.6rem #800020;
+      }
+
+      #dropdownMenu {
+        position: fixed;
+        /* Fixed to always stay at the top-right */
+        top: 15px;
+        /* Adjusted for better alignment */
+        right: 20px;
+        /* Good margin from the right */
+        z-index: 1000;
+        /* Ensures it's always on top */
+      }
+
+      #dropdownMenu button {
+        height: 50px;
+        width: 50px;
+        background-color: #4a4a4a;
+        /* Darker shade for better visibility */
+        color: white;
+        font-weight: bold;
+        font-size: 18px;
+        border: none;
+        border-radius: 50%;
+        /* Circular button */
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: 0.3s ease-in-out;
+      }
+
+      #dropdownMenu button:hover {
+        background-color: #333;
+      }
+
+      #dropdownContent {
+        position: absolute;
+        top: 60px;
+        right: 0;
+        background-color: #ffffff;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+        padding: 10px;
+        min-width: 180px;
+        border-radius: 8px;
+        display: none;
+      }
+
+      #dropdownContent a {
+        color: #333;
+        padding: 10px;
+        text-decoration: none;
+        display: block;
+        font-size: 16px;
+        transition: 0.2s ease-in-out;
+        border-radius: 5px;
+      }
+
+      #dropdownContent a:hover {
+        background-color: #f0f0f0;
+      }
+
+      #dropdownMenu.active #dropdownContent {
+        display: block;
+      }
+
+      .msg {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 3rem;
+        margin: 2rem 0 1.4rem 0;
+        color: #64f1d0;
+      }
+
+      .helping-btn {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .newGame {
+        height: 2rem;
+        width: 6rem;
+        font-size: 1rem;
+        margin: 1.5rem;
+        border-radius: 0.6rem;
+        border: none;
+        background-color: #1f3540;
+        color: #26ffcb;
+      }
+
+      .resetgame {
+        height: 2rem;
+        width: 6rem;
+        font-size: 1rem;
+        margin: 1.5rem;
+        border-radius: 0.6rem;
+        border: none;
+        background-color: #1f3540;
+        color: #26ffcb;
+      }
+
+      .hide {
+        display: none;
+      }
+
+      @media screen and (max-width: 583px) {
+        .helping-btn {
+          margin-top: -24px;
+        }
+
+        .text {
+          font-size: 9px;
+        }
+
+        #hrt {
+          font-size: 20px;
+          color: rgb(255, 69, 69);
+          font-weight: bold;
+          margin: -6px 0;
+        }
+
+        .name {
+          font-size: 11px;
+          font-weight: bold;
+        }
+      }
+
+      @media screen and (max-width: 520px) {
+        .helping-btn {
+          margin-top: -61px;
+        }
+
+        .newGame {
+          height: 1.7rem;
+          width: 5.7rem;
+          font-size: 0.7rem;
+        }
+
+        .resetgame {
+          height: 1.7rem;
+          width: 5.7rem;
+          font-size: 0.7rem;
+        }
+
+        @media screen and (max-width: 458px) {
+          #dropdownMenu {
+            top: 10px;
+            right: 10px;
+          }
+
+          #dropdownMenu button {
+            height: 40px;
+            width: 40px;
+            font-size: 14px;
+          }
+
+          #dropdownContent {
+            top: 50px;
+            min-width: 150px;
+          }
+
+          #dropdownContent a {
+            font-size: 14px;
+            padding: 8px;
+          }
+        }
+
+        @media screen and (max-width: 768px) {
+          #dropdownMenu {
+            top: 15px;
+            /* More balanced spacing */
+            right: 15px;
+            /* Prevents cutting off */
+          }
+
+          #dropdownMenu button {
+            height: 50px;
+            /* Slightly larger for touchscreens */
+            width: 50px;
+            font-size: 18px;
+            /* Improved readability */
+          }
+
+          #dropdownContent {
+            top: 55px;
+            /* Adjusted for proper dropdown placement */
+            right: 0;
+            /* Aligns properly on small screens */
+            min-width: 160px;
+            /* Slightly larger dropdown for better readability */
+            padding: 10px;
+            /* More spacing for better touch response */
+          }
+
+          #dropdownContent a {
+            font-size: 15px;
+            /* Improved readability */
+            padding: 10px 12px;
+            /* Better spacing for touch devices */
+            text-align: center;
+            /* Centers text for better UI */
+          }
+
+          .newGame {
+            height: 1.9rem;
+            width: 5.9rem;
+            font-size: 0.9rem;
+          }
+
+          .resetgame {
+            height: 1.9rem;
+            width: 5.9rem;
+            font-size: 0.9rem;
+          }
+
+          .text {
+            font-size: 10px;
+          }
+
+          /* Heart Symbol */
+          #hrt {
+            font-size: 22px;
+            color: rgb(255, 69, 69);
+            font-weight: bold;
+            margin: -6px 0;
+          }
+
+          /* Name Styling */
+          .name {
+            font-size: 14px;
+            font-weight: bold;
+          }
+        }
+      }
+
+      @media (max-width: 652px) {
+        .msg {
+          font-size: 2.2rem;
+        }
+
+        .box {
+          font-size: 4rem;
+        }
+
+        .head {
+          font-size: 2rem;
+        }
+
+        #dropdownMenu button {
+          height: 43px;
+          width: 43px;
+          font-weight: 400;
+          font-size: 16px;
+        }
+
+        .game-container {
+          height: 54vh;
+        }
+      }
+
+      @media (max-width: 600px) {
+        .game-title {
+          font-size: 17px;
+        }
+
+        .loading-text {
+          font-size: 14px;
+        }
+
+        .progress-bar {
+          height: 10px;
+          width: 240px;
+        }
+
+        .dot {
+          width: 8px;
+          height: 8px;
+          margin: 0 3px;
+        }
+
+        .newGame {
+          height: 1.8rem;
+          width: 5.5rem;
+          font-size: 0.9rem;
+          margin: 1.9rem;
+        }
+
+        .resetgame {
+          height: 1.8rem;
+          width: 5.5rem;
+          font-size: 0.8rem;
+          margin: 1.9rem;
+        }
+      }
+
+      @media (max-width: 475px) {
+        .msg {
+          font-size: 1.9rem;
+        }
+
+        .box {
+          font-size: 3.6rem;
+        }
+
+        .head {
+          font-size: 1.4rem;
+        }
+
+        .newGame {
+          height: 1.8rem;
+          width: 4.8rem;
+          font-size: 0.9rem;
+          margin: 2rem;
+        }
+
+        .resetgame {
+          height: 1.8rem;
+          width: 4.8rem;
+          font-size: 0.8rem;
+          margin: 2rem;
+        }
+
+        #dropdownMenu button {
+          height: 40px;
+          width: 40px;
+        }
+      }
+
+      @media (max-width: 460px) {
+        .msg {
+          font-size: 1.2rem;
+          font-weight: bold;
+        }
+
+        .box {
+          font-size: 2.9rem;
+          height: 60px;
+          width: 60px;
+        }
+
+        .game-container {
+          height: 55vh;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+
+        .game {
+          height: 45vmin;
+          width: 55vmin;
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: center;
+          align-items: center;
+          gap: 6px;
+        }
+
+        .newGame {
+          height: 1.7rem;
+          width: 4.6rem;
+          font-size: 0.8rem;
+          margin: -0.5rem 1.5rem 0 1.5rem;
+        }
+
+        .resetgame {
+          height: 1.7rem;
+          width: 4.6rem;
+          font-size: 0.8rem;
+          margin: -0.5rem 1.5rem 0 1.5rem;
+        }
+      }
+
+      @media (max-width: 376px) {
+        .msg {
+          font-size: 1.1rem;
+          font-weight: bold;
+        }
+
+        .box {
+          font-size: 2.9rem;
+          height: 50px;
+          width: 50px;
+        }
+
+        .game-container {
+          height: 50vh;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+
+        .game {
+          height: 45vmin;
+          width: 55vmin;
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: center;
+          align-items: center;
+          gap: 6px;
+        }
+
+        .newGame {
+          height: 1.8rem;
+          width: 5.5rem;
+          font-size: 0.9rem;
+          margin: 1.7rem;
+        }
+
+        .resetgame {
+          height: 1.8rem;
+          width: 5.5rem;
+          font-size: 0.8rem;
+          margin: 1.7rem;
+        }
+      }
+
+      @media (max-width: 321px) {
+        .msg {
+          font-size: 1rem;
+          font-weight: bold;
+        }
+
+        .box {
+          font-size: 2.4rem;
+          height: 40px;
+          width: 40px;
+        }
+
+        .game-container {
+          height: 45vh;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+
+        .game {
+          height: 43vmin;
+          width: 53vmin;
+          gap: 5px;
+        }
+
+        .newGame {
+          height: 1.8rem;
+          width: 5.5rem;
+          font-size: 0.9rem;
+          margin: 1.5rem;
+        }
+
+        .resetgame {
+          height: 1.8rem;
+          width: 5.5rem;
+          font-size: 0.8rem;
+          margin: 1.5rem;
+        }
+
+        #dropdownMenu button {
+          height: 35px;
+          width: 35px;
+          font-weight: 300;
+          font-size: 13.5px;
+        }
+      }
+    </style>

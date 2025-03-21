@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tic-Tac-Toe</title>
+  </head>
+
+  <body>
+    <div id="gameLoader">
+      <div class="loader-container">
+        <h2 class="game-title">Game Loading...</h2>
+        <p class="loading-text" id="loadingMessage">Initializing...</p>
+        <div class="progress-bar">
+          <div class="progress" id="progressBar"></div>
+        </div>
+        <div class="loading-dots">
+          <div class="dot"></div>
+          <div class="dot"></div>
+          <div class="dot"></div>
+        </div>
+      </div>
+    </div>
+
+    <h1 class="head">Tic-Tac-Toe</h1>
+
+    <div class="msg hide" style="font-family: 'Poppins', sans-serif"></div>
+
+    <div class="game-container">
+      <div class="game">
+        <button class="box"></button>
+        <button class="box"></button>
+        <button class="box"></button>
+        <button class="box"></button>
+        <button class="box"></button>
+        <button class="box"></button>
+        <button class="box"></button>
+        <button class="box"></button>
+        <button class="box"></button>
+      </div>
+    </div>
+
+    <div class="helping-btn">
+      <button class="newGame" onclick="reloadPage()">New Game</button>
+      <button class="resetgame">Reset Game</button>
+    </div>
+
+    <div id="dropdownMenu">
+      <button onclick="toggleDropdown()" id="more">
+        <bold>|||</bold>
+      </button>
+      <div id="dropdownContent">
+        <a href="#" onclick="showInstructions()">How to play</a>
+        <a href="#" onclick="showAboutGame()">About Game</a>
+        <a href="#" onclick="showAboutDevelopers()">About Developer</a>
+      </div>
+    </div>
+
+    <div id="subscription">
+      <p class="text">Made with</p>
+      <div id="hrt">♥</div>
+      <p class="text">by <span class="name">Saurab</span></p>
+    </div>
